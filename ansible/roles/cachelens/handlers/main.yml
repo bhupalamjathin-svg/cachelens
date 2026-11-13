@@ -1,0 +1,8 @@
+---
+# Runs only when a task that notifies it actually changed something (new JAR, new config, new unit file).
+# Re-running the playbook with nothing changed does NOT restart the app.
+- name: Restart cachelens
+  ansible.builtin.systemd:
+    name: "{{ app_name }}"
+    state: restarted
+    daemon_reload: true

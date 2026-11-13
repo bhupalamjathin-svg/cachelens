@@ -1,0 +1,20 @@
+# Optional bonus: autoscale 3-8 pods on CPU. Needs:  minikube addons enable metrics-server
+# Not applied by `kubectl apply -f k8s/` (subfolders are skipped); apply it explicitly.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: cachelens
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cachelens
+  minReplicas: 3
+  maxReplicas: 8
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60

@@ -1,0 +1,5 @@
+---
+# Values for every host in the inventory (override role defaults).
+app_port: 8080
+cache_policy: LFU
+cache_capacity: 10

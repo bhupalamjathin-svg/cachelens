@@ -1,0 +1,3 @@
+---
+# Role-internal constants (higher precedence than defaults). Intentionally empty:
+# everything a user may want to change lives in defaults/main.yml.

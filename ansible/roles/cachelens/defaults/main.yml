@@ -1,0 +1,13 @@
+---
+# Defaults for the cachelens role. Override in group_vars/ or with -e on the command line.
+app_name: cachelens
+app_user: cachelens
+app_dir: /opt/cachelens
+app_config_dir: /etc/cachelens
+app_port: 8080
+cache_policy: LRU
+cache_capacity: 5
+java_package: openjdk-17-jre-headless
+
+# Path (on the control machine) of the JAR built by Maven/Jenkins
+artifact_src: "{{ lookup('ansible.builtin.fileglob', playbook_dir ~ '/../target/cachelens-*.jar', wantlist=True) | first }}"

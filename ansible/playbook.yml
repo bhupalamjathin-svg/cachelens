@@ -1,0 +1,8 @@
+---
+# Configure the app server(s) and deploy the CacheLens JAR as a systemd service.
+#   ansible-playbook -i inventory.ini playbook.yml
+- name: Deploy CacheLens
+  hosts: app_servers
+  become: true
+  roles:
+    - cachelens

@@ -1,0 +1,12 @@
+# Runtime settings live here, not in the image or the Deployment.
+# Change a value, then:  kubectl apply -f k8s/configmap.yaml && kubectl rollout restart deployment/cachelens
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cachelens-config
+  labels:
+    app: cachelens
+data:
+  APP_PORT: "8080"
+  CACHE_POLICY: "LRU"
+  CACHE_CAPACITY: "50"

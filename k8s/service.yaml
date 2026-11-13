@@ -1,0 +1,17 @@
+# One stable address in front of all CacheLens pods.
+# Reach it from your laptop with:  minikube service cachelens --url
+apiVersion: v1
+kind: Service
+metadata:
+  name: cachelens
+  labels:
+    app: cachelens
+spec:
+  type: NodePort
+  selector:
+    app: cachelens
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      nodePort: 30080
