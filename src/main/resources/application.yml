@@ -1,0 +1,27 @@
+server:
+  port: ${APP_PORT:8080}
+  shutdown: graceful
+
+spring:
+  application:
+    name: cachelens
+
+# Values come from environment variables so the same JAR / image can be configured by
+# Ansible (systemd EnvironmentFile) or Kubernetes (ConfigMap) without a rebuild.
+cachelens:
+  policy: ${CACHE_POLICY:LRU}
+  capacity: ${CACHE_CAPACITY:5}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true     # /actuator/health/liveness and /actuator/health/readiness
+      show-details: never
+  metrics:
+    tags:
+      application: cachelens
