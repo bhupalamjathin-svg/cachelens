@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cachelens
+  labels:
+    app: cachelens
+  annotations:
+    kubernetes.io/change-cause: "v1 - initial release"
+spec:
+  replicas: 3
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: cachelens            # must match template labels AND the Service selector
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0         # never take a healthy pod down before its replacement is Ready
+  template:
+    metadata:
+      labels:
+        app: cachelens
+    spec:
+      containers:
+        - name: cachelens
+          image: cachelens:v1
+          imagePullPolicy: IfNotPresent   # image is built inside Minikube's Docker, not pulled from a registry
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: cachelens-config
+          resources:
+            requests:
+              cpu: 100m
+              memory: 192Mi
+            limits:
+              memory: 384Mi
+          # Spring Boot needs a few seconds to start; liveness is held off until this passes
+          startupProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            periodSeconds: 2
+            failureThreshold: 45
+          # Is the JVM alive? If not, Kubernetes restarts the container.
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          # Can it take traffic? If not, the Service stops sending it requests.
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            periodSeconds: 5
+            failureThreshold: 2

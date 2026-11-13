@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  author: Sai Jathin Bhupalam
+  description: Installs Java and runs the CacheLens Spring Boot JAR as a systemd service
+  license: MIT
+  min_ansible_version: "2.14"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+dependencies: []

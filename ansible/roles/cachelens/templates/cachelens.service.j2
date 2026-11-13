@@ -1,0 +1,15 @@
+# Managed by Ansible
+[Unit]
+Description=CacheLens cache-eviction simulator API
+After=network.target
+
+[Service]
+User={{ app_user }}
+EnvironmentFile={{ app_config_dir }}/{{ app_name }}.env
+ExecStart=/usr/bin/java -XX:MaxRAMPercentage=50 -jar {{ app_dir }}/{{ app_name }}.jar
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
