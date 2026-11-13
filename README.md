@@ -53,3 +53,4 @@ The full walkthrough (Git → Jenkins → Ansible → Docker → Kubernetes, plu
 Every replica keeps its own in-memory cache, so after scaling to 5 pods, a `PUT` handled by pod A is a miss on pod B
 (`scripts/spread.sh` shows the Service spreading requests across pods). This is on purpose. It shows why production
 services keep pods **stateless** and put shared state in Redis/Memcached, which is the obvious next step for this project.
+
