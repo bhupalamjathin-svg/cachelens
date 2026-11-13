@@ -4,7 +4,7 @@
 #  2. show the rollout stall: new pod CrashLoops, but the 3 old pods keep serving (maxUnavailable: 0 + readiness probe)
 #  3. kubectl rollout undo -> back to the last good revision
 set -uo pipefail
-URL="$(minikube service cachelens --url 2>/dev/null | head -1)"
+URL="${1:?usage: scripts/rollback-demo.sh <service-url>}"
 
 echo "### Current revision history"; kubectl rollout history deployment/cachelens
 
