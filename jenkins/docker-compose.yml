@@ -1,0 +1,18 @@
+# Local Jenkins for the assignment.
+#   docker compose -f jenkins/docker-compose.yml up -d --build
+#   open http://localhost:8090   (initial password: docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword)
+services:
+  jenkins:
+    build: .
+    container_name: jenkins
+    # root inside the container only so it can use the mounted Docker socket; fine for a local lab, not for production
+    user: root
+    ports:
+      - "8090:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
