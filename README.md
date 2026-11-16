@@ -54,3 +54,18 @@ Every replica keeps its own in-memory cache, so after scaling to 5 pods, a `PUT`
 (`scripts/spread.sh` shows the Service spreading requests across pods). This is on purpose. It shows why production
 services keep pods **stateless** and put shared state in Redis/Memcached, which is the obvious next step for this project.
 
+
+## Branches & Pull Requests
+
+All work was done on feature branches and merged into `main` through pull requests (merge commits kept).
+
+| PR | Branch | What it added |
+|---|---|---|
+| #1 | `feature/ci-pipeline` | CI pipeline: Jenkins + GitHub Actions |
+| #2 | `feature/deploy` | Deployment: Ansible + Docker + Kubernetes |
+| #3 | `chore/actions-v5` | Bump GitHub Actions to v5 |
+| #4 | `docs/ci-trigger` | Trigger CI |
+| #5 | `fix/rollback-url` | Rollback script: URL argument |
+| #6 | `feat/live-demo` | Live demo script |
+
+View the graph: **Insights → Network** on GitHub, or `git log --oneline --graph --all`.
